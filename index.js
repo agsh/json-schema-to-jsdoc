@@ -216,7 +216,7 @@ function getType (schema, rootSchema) {
     if (schema.type.includes('null')) {
       return `?${schema.type[0]}`
     } else {
-      return schema.type.join('|')
+      return schema.type.map(type => type === 'integer' ? 'number' : type).join('|')
     }
   }
 
