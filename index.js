@@ -139,6 +139,10 @@ function processProperties (schema, rootSchema, base, config) {
 }
 
 function getSchemaType (schema, rootSchema) {
+  if (schema.type === 'integer') {
+    schema.type = 'number';
+  }
+
   if (schema.$ref) {
     const ref = json.get(rootSchema, schema.$ref.slice(1))
     return getSchemaType(ref, rootSchema)
