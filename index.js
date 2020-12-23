@@ -96,10 +96,10 @@ function processItems (schema, rootSchema, base, config) {
     const defaultValue = item.default
     const optional = !schema.minItems || i >= schema.minItems
     if (item.type === 'array' && item.items) {
-      result.push(...writeProperty('array', prefixedProperty, item.description, optional, defaultValue, config))
+      result.push(...writeProperty('Array', prefixedProperty, item.description, optional, defaultValue, config))
       result.push(...processItems(item, rootSchema, prefixedProperty, config))
     } else if (item.type === 'object' && item.properties) {
-      result.push(...writeProperty('object', prefixedProperty, item.description, optional, defaultValue, config))
+      result.push(...writeProperty('Object', prefixedProperty, item.description, optional, defaultValue, config))
       result.push(...processProperties(item, rootSchema, prefixedProperty, config))
     } else {
       const type = getType(item, rootSchema) || getDefaultPropertyType(config)
@@ -124,10 +124,10 @@ function processProperties (schema, rootSchema, base, config) {
       const defaultValue = props[property].default
       const optional = !required.includes(property)
       if (prop.type === 'object' && prop.properties) {
-        result.push(...writeProperty('object', prefixedProperty, prop.description, optional, defaultValue, config))
+        result.push(...writeProperty('Object', prefixedProperty, prop.description, optional, defaultValue, config))
         result.push(...processProperties(prop, rootSchema, prefixedProperty, config))
       } else if (prop.type === 'array' && prop.items) {
-        result.push(...writeProperty(`Array<${getType(prop.items, rootSchema)}>`, prefixedProperty, prop.description, optional, defaultValue, config))
+        result.push(...writeProperty(`array<${getType(prop.items, rootSchema)}>`, prefixedProperty, prop.description, optional, defaultValue, config))
         result.push(...processItems(prop, rootSchema, prefixedProperty, config))
       } else {
         const type = getType(prop, rootSchema) || getDefaultPropertyType(config, property)
